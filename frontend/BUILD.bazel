@@ -1,0 +1,70 @@
+load("@aspect_rules_js//js:defs.bzl", "js_library", "js_run_binary", "js_run_devserver", "js_test")
+load("@npm//:defs.bzl", "npm_link_all_packages")
+load("@npm//frontend:vite/package_json.bzl", "bin")
+
+npm_link_all_packages(
+    name = "node_modules",
+)
+
+RUNTIME_DEPS = [
+    ":lib",
+    "index.html",
+    "package.json",
+    ":node_modules/react-dom",
+    ":node_modules/react",
+    ":node_modules/web-vitals",
+]
+
+js_library(
+    name = "package_json",
+    srcs = ["package.json"],
+    visibility = ["//visibility:public"],
+    deps = [":node_modules/eslint-config-react-app"],
+)
+
+js_library(
+    name = "vite.config",
+    srcs = ["vite.config.js"],
+    data = [
+        ":node_modules/@vitejs/plugin-react",
+        ":node_modules/vite-plugin-svgr",
+        ":node_modules/vitest",
+    ],
+    visibility = ["//frontend:__subpackages__"],
+)
+
+js_library(
+    name = "lib",
+    srcs = glob(["src/**/*.jsx", "src/**/*.js", "src/**/*.css", "src/**/*.scss", "public/**/*"]),
+    visibility = ["//frontend:__subpackages__"],
+)
+
+bin.vite_binary(
+    name = "vite",
+    chdir = package_name(),
+    data = ["vite.config"],
+)
+
+js_run_devserver(
+    name = "start",
+    args = ["."],
+    data = RUNTIME_DEPS,
+    tool = ":vite",
+)
+
+# js_run_binary(
+#     name = "build",
+#     srcs = RUNTIME_DEPS,
+#     args = ["build"],
+#     mnemonic = "ViteBuild",
+#     out_dirs = ["dist"],
+#     tool = ":vite",
+# )
+
+# bin.vite_binary(
+#     name = "preview",
+#     args = ["preview"],
+#     chdir = package_name(),
+#     data = [":build"],
+# )
+
