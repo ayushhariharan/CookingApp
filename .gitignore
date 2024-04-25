@@ -1,24 +1,10 @@
-# Node modules and package management
-node_modules/
-yarn-error.log
-package-lock.json
-yarn.lock
-
 # Bazel build files
 bazel-*
 /bazel-bin/
 /bazel-out/
 /bazel-testlogs/
-/bazel-PeaceHealthApp/
-.bazelrc
+/bazel-CookingApp/
 .bazelversion
-
-# Expo & React Native specifics
-web-build/
-ios/build/
-android/.gradle
-android/build/
-android/app/build/
 
 # General system files
 .DS_Store
@@ -37,30 +23,3 @@ Desktop.ini
 
 # local env files
 .env*.local
-
-# dependencies
-node_modules/
-
-# Expo
-.expo/
-dist/
-web-build/
-
-# Native
-*.orig.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
-
-# Metro
-.metro-health-check*
-
-# debug
-npm-debug.*
-yarn-debug.*
-yarn-error.*
-
-# typescript
-*.tsbuildinfo
