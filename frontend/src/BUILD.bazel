@@ -1,0 +1,53 @@
+load("@aspect_rules_js//js:defs.bzl", "js_library")
+load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+load("@aspect_rules_swc//swc:defs.bzl", "swc")
+load("@bazel_skylib//lib:partial.bzl", "partial")
+
+ASSET_PATTERNS = [
+    "*.svg",
+    "*.css",
+]
+
+SRC_PATTERNS = [
+    "*.tsx",
+    "*.ts",
+]
+
+TEST_PATTERNS = [
+    "*.test.tsx",
+    "*.test.ts",
+    "*.spec.tsx",
+    "*.spec.ts",
+]
+
+TRANSPILER = partial.make(
+    swc,
+    swcrc = "//frontend:.swcrc",
+)
+
+js_library(
+    name = "assets",
+    srcs = glob(ASSET_PATTERNS),
+    visibility = ["//frontend:__subpackages__"],
+)
+
+ts_project(
+    name = "src",
+    srcs = glob(
+        include = SRC_PATTERNS,
+        exclude = TEST_PATTERNS,
+    ),
+    data = [":assets"],
+    declaration = True,
+    resolve_json_module = True,
+    transpiler = TRANSPILER,
+    tsconfig = "//frontend:tsconfig",
+    visibility = ["//frontend:__subpackages__"],
+    deps = [
+        "//frontend:node_modules/@types/react",
+        "//frontend:node_modules/react",
+        "//frontend:node_modules/react-dom",
+        "//frontend:node_modules/vite-plugin-svgr",
+        "//frontend:node_modules/web-vitals",
+    ],
+)
