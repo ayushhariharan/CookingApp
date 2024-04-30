@@ -1,8 +1,6 @@
-declare var require: any
-
 /// <reference types="vite-plugin-svgr/client" />
-import logo from './logo.svg';
-import './App.css';
+import logo from './assets/logo.svg?react';
+import './assets/App.css';
 
 function App() {
   return (

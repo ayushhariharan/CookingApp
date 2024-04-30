@@ -1,35 +1,6 @@
-load("@aspect_rules_js//js:defs.bzl", "js_library")
 load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
-load("@aspect_rules_swc//swc:defs.bzl", "swc")
-load("@bazel_skylib//lib:partial.bzl", "partial")
+load("//frontend:defs.bzl", "SRC_PATTERNS", "TEST_PATTERNS", "TRANSPILER")
 
-ASSET_PATTERNS = [
-    "*.svg",
-    "*.css",
-]
-
-SRC_PATTERNS = [
-    "*.tsx",
-    "*.ts",
-]
-
-TEST_PATTERNS = [
-    "*.test.tsx",
-    "*.test.ts",
-    "*.spec.tsx",
-    "*.spec.ts",
-]
-
-TRANSPILER = partial.make(
-    swc,
-    swcrc = "//frontend:.swcrc",
-)
-
-js_library(
-    name = "assets",
-    srcs = glob(ASSET_PATTERNS),
-    visibility = ["//frontend:__subpackages__"],
-)
 
 ts_project(
     name = "src",
@@ -37,7 +8,7 @@ ts_project(
         include = SRC_PATTERNS,
         exclude = TEST_PATTERNS,
     ),
-    data = [":assets"],
+    data = ["//frontend/src/assets:assets"],
     declaration = True,
     resolve_json_module = True,
     transpiler = TRANSPILER,

@@ -13,7 +13,7 @@ npm_link_all_packages(
 RUNTIME_DEPS = [
     "//frontend/public",
     "//frontend/src",
-    "//frontend/src:assets",
+    "//frontend/src/assets",
     "index.html",
     "package.json",
     ":node_modules/react-dom",
@@ -69,19 +69,19 @@ js_run_devserver(
     tool = ":vite",
 )
 
-# js_run_binary(
-#     name = "build",
-#     srcs = RUNTIME_DEPS,
-#     args = ["build"],
-#     mnemonic = "ViteBuild",
-#     out_dirs = ["dist"],
-#     tool = ":vite",
-# )
+js_run_binary(
+    name = "build",
+    srcs = RUNTIME_DEPS,
+    args = ["build"],
+    mnemonic = "ViteBuild",
+    out_dirs = ["dist"],
+    tool = ":vite",
+)
 
-# bin.vite_binary(
-#     name = "preview",
-#     args = ["preview"],
-#     chdir = package_name(),
-#     data = [":build"],
-# )
+bin.vite_binary(
+    name = "preview",
+    args = ["preview"],
+    chdir = package_name(),
+    data = [":build"],
+)
 
