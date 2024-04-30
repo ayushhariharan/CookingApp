@@ -1,6 +1,8 @@
 /// <reference types="vite-plugin-svgr/client" />
 import logo from './assets/logo.svg?react';
-import './assets/App.css';
+import ServerHomeDisplay from './components/ServerHomeDisplay';
+
+import './assets/App.css'; 
 
 function App() {
   return (
@@ -10,6 +12,7 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
+        <ServerHomeDisplay></ServerHomeDisplay>
         <a
           className="App-link"
           href="https://reactjs.org"

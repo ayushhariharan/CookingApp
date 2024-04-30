@@ -1,14 +1,13 @@
 load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
 load("//frontend:defs.bzl", "SRC_PATTERNS", "TEST_PATTERNS", "TRANSPILER")
 
-
 ts_project(
     name = "src",
     srcs = glob(
         include = SRC_PATTERNS,
         exclude = TEST_PATTERNS,
     ),
-    data = ["//frontend/src/assets:assets"],
+    data = ["//frontend/src/assets"],
     declaration = True,
     resolve_json_module = True,
     transpiler = TRANSPILER,
